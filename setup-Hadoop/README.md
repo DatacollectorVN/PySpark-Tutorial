@@ -103,7 +103,7 @@ Stop Hadoop then resolve this problem:
 stop-all.sh
 ```
 
-Please follow [here](https://stackoverflow.com/questions/22842743/how-to-set-java-home-environment-variable-on-mac-os-x-10-9) to resolve this problme, our steps:
+Please follow [here](https://stackoverflow.com/questions/22842743/how-to-set-java-home-environment-variable-on-mac-os-x-10-9) to resolve this problem, our steps:
 
 *Generate new keygen:*
 ```bash
