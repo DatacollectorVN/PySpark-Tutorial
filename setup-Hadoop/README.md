@@ -123,3 +123,20 @@ jps
 ```
 
 Access Hadoop via port `9870`, type in web brownser `http://localhost:9870`
+
+# Getting start with Hadoop
+You can read he Hadoop HDFS Command Cheatsheet [here](https://images.linoxide.com/hadoop-hdfs-commands-cheatsheet.pdf).
+
+### 1. Create directory in Hadoop
+```bash
+hdfs dfs -mkdir /user
+hdfs dfs -mkdir /user/NathanNgo
+```
+You can see this via Hadoop web brownser in `http://localhost:9870`.
+
+### 2. Upload file to HDFS
+```bash
+hdfs dfs -put src-data/5000_points.txt /user/NathanNgo
+```
+We can load this HDFS file by path `hdfs://localhost:9000//user/NathanNgo/5000_points.txt`. See in `1.getting-start/2.RDD.ipynb`.
+*Note:* You must to start Hadoop `start-all.sh` before load this HDFS file.
