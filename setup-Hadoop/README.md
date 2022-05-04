@@ -98,7 +98,7 @@ start-all.sh
 ```
 You can get the permission denied like `localhost: nathanngo@localhost: Permission denied (publickey,password,keyboard-interactive)`.
 
-Stop Hadoop then resolbe problem:
+Stop Hadoop then resolve this problem:
 ```bash
 stop-all.sh
 ```
