@@ -7,11 +7,11 @@
 ```bash
 brew install hadoop
 ```
-*Note:* If you are using `yarn`, it might be get error like `Error: Cannot install hadoop because conflicting formulae are installed. yarn: because both install 'yarn' binaries`. To resolve this error, unlink `brew` with `yarn`:
+*Note:* If you are using `yarn` from `NodeJS`, it might be get error like `Error: Cannot install hadoop because conflicting formulae are installed. yarn: because both install 'yarn' binaries`. To resolve this error, unlink `brew` with `yarn`:
 ```bash
 brew unlink yarn
 ```
-*Remember*: you can link with yarn again when using `brew link yarn`.
+*Remember*: you can link with yarn again when using `brew link yarn`. If you want to use `yarn` from `NodeJS`, you can unlink with hadoop like `brew unlink hadoop` or alias `yarn` by `yarnpkg`.
 
 #### Step2: Move into Hadoop location
 ```bash
