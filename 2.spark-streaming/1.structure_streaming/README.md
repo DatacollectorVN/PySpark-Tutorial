@@ -46,7 +46,7 @@ First of all, check the `bin/spark-submit` location, in our case, we dowloaded `
 
 Then running:
 ```bash
-/opt/homebrew/Cellar/apache-spark/3.2.1/bin/spark-submit 2.spark-streaming/1.getting-start/1.structured_network_wordcount.py.py localhost 9999
+/opt/homebrew/Cellar/apache-spark/3.2.1/bin/spark-submit 1.structured_network_wordcount.py localhost 9999
 ```
 #### When running
 Any lines typed in the terminal running the netcat server will be counted and printed on screen every second. It will look something like the following
