@@ -97,3 +97,43 @@ ssc = StreamingContext(sc, 1) # 1 mean batch interval of 1s.
 - **Only one `StreamingContext` can be active in a JVM at the same time**.
 - ``stop()`` on `StreamingContext` also stops the `SparkContext`. To stop only the `StreamingContext`, set the optional parameter of stop() called stopSparkContext to false `ssc.stop(stopSparkContext=False)`.
 - A `SparkContext` can be re-used to create multiple `StreamingContexts`, as long as the previous `StreamingContext` is stopped (without stopping the `SparkContext`) before the next `StreamingContext` is created.
+
+## 5. `Input DStreams` and `Receivers`
+`Input DStreams` are `DStreams` representing the stream of input data received from streaming sources.
+
+**In Quickly example**
+`lines` was an input DStream as it represented the stream of data received from the netcat server.
+
+```bash
+lines = ssc.socketTextStream("localhost", 9999)
+```
+
+Every `input DStream` (except file stream) is associated with a `Receiver` (Scala doc, Java doc) object which receives the data from a source and stores it in Spark’s memory for processing. See the figure in Section 2 `Spark Streaming Working Principles`.
+
+`Spark Streaming` provides two categories of `built-in streaming sources`:
+- *Basic sources*: Sources directly available in the `StreamingContext` API. Examples: file systems, and socket connections.
+- *Advanced sources*: Sources like `Kafka`, `Kinesis`, etc. are available through extra utility classes. These require linking against extra dependencies as discussed in the [linking](https://spark.apache.org/docs/latest/streaming-programming-guide.html#linking) section.
+
+**Multiple sources:**
+if you want to receive multiple streams of data in parallel in your streaming application, you can create multiple input DStreams. 
+read some examples [here](https://spark.apache.org/docs/latest/streaming-programming-guide.html#level-of-parallelism-in-data-receiving).
+
+**Points to remember:**
+- When running a `Spark Streaming` program locally, do not use `local` or `local[1]` as the master URL. Either of these means that only one thread will be used for running tasks locally. If you are using an input `DStream` based on a receiver (e.g. `sockets`, `Kafka`, etc.), then the single thread will be used to run the `receiver`, leaving no thread for processing the received data. Hence, when running locally, always use `local[n]` as the master URL, *where n > number of receivers to run (see Spark Properties [here](https://spark.apache.org/docs/latest/configuration.html#spark-properties) for information on how to set the master)*.
+
+- Extending the logic to running on a cluster, the number of cores allocated to the `Spark Streaming` application must be more than the number of `receivers`. Otherwise the system will receive data, but not be able to process it.
+
+## 6. Basic Sources
+`ssc.socketTextStream(...)` in the quick example which creates a `DStream` from text data received over a `TCP socket connection`. Besides sockets, the `StreamingContext` API provides methods for creating `DStreams` from files as input sources.
+
+**File Streams**
+
+For reading data from files on any file system compatible with the HDFS API (that is, HDFS, S3, NFS, etc.), a DStream can be created as via `StreamingContext.fileStream[KeyClass, ValueClass, InputFormatClass]`.
+
+File streams do not require running a receiver so there is no need to allocate any cores for receiving file data.
+
+For simple text files, the easiest method is `StreamingContext.textFileStream(dataDirectory)`.
+`fileStream` is not available in the `Python API`, only `textFileStream` is available.
+```bash
+streamingContext.textFileStream(dataDirectory)
+```
