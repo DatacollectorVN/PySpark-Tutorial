@@ -1,2 +1,5 @@
 **/.ipynb_checkpoints
 src-data/
+**/__pycache__
+**/**/__pycache__
+./3.configure_log4j_spark_streaming/use_log4j.ipynb
